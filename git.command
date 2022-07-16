@@ -1,1 +1,0 @@
-git is simple tool for vcs

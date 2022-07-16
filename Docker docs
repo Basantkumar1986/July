@@ -1,0 +1,192 @@
+DOCKER Course
+Yuotube URL ---https://www.youtube.com/watch?v=MD7zrG7M8_k&list=RDCMUCObs0kLIrDjX2LLSybqNaEA&index=1
+https://www.youtube.com/watch?v=0SS6bJczlgs
+Great learning
+
+Docker hub login
+bkmohanty
+Basant1986@
+
+https://www.tutorialspoint.com/docker/building_docker_files.htm
+
+https://dockerlabs.collabnix.com/docker/cheatsheet/
+
+1. docker search
+We can use the command docker search to search for public images on the Docker hub. It will return information about the image name, description, stars, official and automated.
+
+docker search MySQL
+If you prefer a GUI-based search option, use the Docker Hub website.
+
+2. docker pull
+Now that we know the name of the image, we can pull that from the Docker hub using the command docker pull. Here, we are setting the platform option as well.
+
+docker pull --platform linux/x86_64 mysql
+Tags are used to identify images inside a repository. If we don’t specify a tag Docker engine uses the :latest tag by default. So, in the previous example, Docker pulled the mysql:latest image.
+
+If our application depends on a specific version of an image, we can specify that using a tag name.
+
+docker pull --platform linux/arm64/v8 mysql:5.6
+Since we can have multiple images under one repository, we can pull all the images using the --all-tags option. The following command will pull all the images from the mysql repository.
+
+docker pull --all-tags mysql
+3. docker images
+Brilliant, now we should have some images in our local machine, and to confirm, let’s run the following command to list all the local images.
+
+docker images
+
+docker images
+In my case, I have two images that we downloaded in the previous step.
+
+4. docker run
+Alright, now that we have some images, we can try to create a container. Here we used the --env option to set a mandatory environment variable and --detach option to run the container in the background.
+
+docker run --env MYSQL_ROOT_PASSWORD=my-secret-pw --detach mysql
+Moreover, we can use the --name option to assign a name to the container. Docker will randomly assign a name if we don’t provide one.
+
+5. docker ps
+We can list all the running containers by using the following command.
+
+docker ps
+
+How about listing all the containers, including stopped once? We can do that by adding --all option.
+
+docker ps --all
+
+6. docker stop
+To stop a container, use the docker stop command with either the container id or container name. We may stop a container if we want to change our docker run command.
+
+docker stop f8c52bedeecc
+7. docker restart
+Let’s restart our stopped contained by using the following command. We may want to use this after we reboot our machine.
+
+docker restart f8c52bedeecc
+8. docker rename
+Now, let’s change the container name from compassionate_fermi to test_db. We may want to change the name to keep track of our containers more easily.
+
+docker rename compassionate_fermi test_db
+9. docker exec
+Access the running container test_db by running the following command. It’s helpful if we want to access the MySQL command line and execute MySQL queries.
+
+docker exec -it test_db bash
+mysql -uroot -pmy-secret-pw
+SHOW DATABASES;
+The -i and -t options are used to access the container in an interactive mode. Then we provide the name of the container we want to access, which in this case test_db. Finally, the bash command is used to get a bash shell inside the container.
+
+10. docker logs
+This command is helpful to debug our Docker containers. It will fetch logs from a specified container.
+
+docker logs test_db
+If we want to continue to stream new output, we can use the option -follow.
+
+docker logs -follow test_db
+11. docker rm
+In case we want to remove a container, we can use the following command.
+
+docker rm test_db
+You may encounter an error like
+
+Error response from daemon: You cannot remove a running container ……… Stop the container before attempting removal or force remove
+
+As it recommends, we can stop the container first and then remove it or use option -f to remove a running container forcefully.
+
+docker stop test_db
+docker rm test_db
+# or
+docker rm -f test_db
+12. docker rmi
+Finally, if we want to free some disk space, we can use the docker rmi command with the image id to remove an image.
+
+docker rmi eb0e825dc3cf
+These commands come with plenty of helpful options. If you want to know about other available options, run the docker command_name --help command. For example:
+
+docker logs --help
+I use Docker almost every day for open-source development. It allows others to contribute to the project easily without worrying about how to run the project. I hope these 12 Docker commands will help you get started with Docker. If you like to know more about Docker, then check the articles below. Happy coding!
+
+13. Install vim, yum in a docker container use below commands
+docker exec -u root -it mycontainer bash
+*then install vim (or what you need) with
+
+	
+
+Management Commands:
+  builder     Manage builds
+  config      Manage Docker configs
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+
+14. Three types of volum mount in docker
+volume mount ------ which is intract with docker container
+bind mount --------whic we can mount with local files/folders
+tmpfs mount -------- temoprary mount which is store in memory (use and through)
+
+15.Network drivers🔗
+Docker’s networking subsystem is pluggable, using drivers. Several drivers exist by default, and provide core networking functionality:
+
+bridge: The default network driver. If you don’t specify a driver, this is the type of network you are creating. Bridge networks are usually used when your applications run in standalone containers that need to communicate. See bridge networks.
+
+host: For standalone containers, remove network isolation between the container and the Docker host, and use the host’s networking directly. See use the host network.
+
+overlay: Overlay networks connect multiple Docker daemons together and enable swarm services to communicate with each other. You can also use overlay networks to facilitate communication between a swarm service and a standalone container, or between two standalone containers on different Docker daemons. This strategy removes the need to do OS-level routing between these containers. See overlay networks.
+
+ipvlan: IPvlan networks give users total control over both IPv4 and IPv6 addressing. The VLAN driver builds on top of that in giving operators complete control of layer 2 VLAN tagging and even IPvlan L3 routing for users interested in underlay network integration. See IPvlan networks.
+
+macvlan: Macvlan networks allow you to assign a MAC address to a container, making it appear as a physical device on your network. The Docker daemon routes traffic to containers by their MAC addresses. Using the macvlan driver is sometimes the best choice when dealing with legacy applications that expect to be directly connected to the physical network, rather than routed through the Docker host’s network stack. See Macvlan networks.
+
+none: For this container, disable all networking. Usually used in conjunction with a custom network driver. none is not available for swarm services. See disable container networking.
+
+Network plugins: You can install and use third-party network plugins with Docker. These plugins are available from Docker Hub or from third-party vendors. See the vendor’s documentation for installing and using a given network plugin.
